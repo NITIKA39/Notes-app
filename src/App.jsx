@@ -58,11 +58,13 @@ const App = () => {
         </form>
         <div className=' lg:w-1/2 lg:border-l-2 p-10'>
         <h1 className='text-4xl font-bold'>Recent notes</h1>
-        <div className='flex flex-wrap gap-5 mt-5 h-full overflow-auto'>
+        <div className='flex flex-wrap content-start gap-5 mt-6 h-full overflow-auto'>
           {task.map(function(elem,idx){//.map() goes thoough the array one elem at a time and idx simply means index 
              //we passed elem.title because elem is an object stored in task array with both values title and detiled and we just want heading to be printed in recent notes 
              //react uses key to identify individual elem in the list 
-             return<div key={idx} className="h-52 w-40 rounded-2xl text-black p-4 bg-white"><h3 className='leading-tight text-xl font-bold'>{elem.heading}</h3></div>
+             return<div key={idx} className="h-52 w-[30%] rounded-xl text-black p-4 bg-white"><h3 className='leading-tight text-xl font-bold'>{elem.heading}</h3>
+             <p className='mt-4 leading-tight font-medium text-gray-500'>{elem.detailed}</p>
+             </div>
           })}
         </div>
         </div>
