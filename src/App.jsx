@@ -1,5 +1,6 @@
 import React from 'react'
 import {useState} from 'react'
+import { Trash } from 'lucide-react';
 
 const App = () => {
 
@@ -19,10 +20,17 @@ const App = () => {
     e.preventDefault()
     const copyTask = [...task] //copied task to keep intact(stays there until not deleted) with old one while making new one (task is probably an array containing all existing tasks.The spread operator ... creates a copy of the task array.)
     copyTask.push({heading,detailed}) //Adds a new task to the copied array.
-    console.log(copyTask)
+    
     settask(copyTask) //Updates the React state. So now the new task list becomes the current task. (the new task will not be saved into the React state.)
     setheading("") //Clears the heading/title input.
     setdetailed("")
+  }
+
+  // delete function 
+  const deleteNotes = (idx)=>{
+    const copyTask = [...task];
+    copyTask.splice(idx,1)
+    settask(copyTask) 
   }
 
   return (
@@ -58,12 +66,16 @@ const App = () => {
         </form>
         <div className=' lg:w-1/2 lg:border-l-2 p-10'>
         <h1 className='text-4xl font-bold'>Recent notes</h1>
-        <div className='flex flex-wrap content-start gap-5 mt-6 h-full overflow-auto'>
+        <div className='flex flex-wrap content-start gap-5 mt-6 h-[90%] overflow-auto'>
           {task.map(function(elem,idx){//.map() goes thoough the array one elem at a time and idx simply means index 
              //we passed elem.title because elem is an object stored in task array with both values title and detiled and we just want heading to be printed in recent notes 
              //react uses key to identify individual elem in the list 
-             return<div key={idx} className="h-52 w-[30%] rounded-xl text-black p-4 bg-white"><h3 className='leading-tight text-xl font-bold'>{elem.heading}</h3>
-             <p className='mt-4 leading-tight font-medium text-gray-500'>{elem.detailed}</p>
+             return<div key={idx} className="relative h-52 w-[30%] rounded-xl text-black py-8 px-4 bg-cover bg-[url('https://i.pinimg.com/736x/12/45/38/12453874e3224f1983c1d0a5374a4c51.jpg')]">
+              <h2 onClick={()=>{
+                deleteNotes(idx)
+              }} className='cursor-pointer absolute top-2 right-2 text-xs p-1 rounded-full'><Trash size={20} color="#e00606" strokeWidth={3} /></h2>
+              <h3 className='leading-tight text-xl mr-3 font-bold'>{elem.heading}</h3>
+             <p className='mt-3.5 leading-tight font-medium text-gray-500'>{elem.detailed}</p>
              </div>
           })}
         </div>
